@@ -1,0 +1,204 @@
+/*
+Theme Name: Flatsome Child
+Description: This is a child theme for Flatsome Theme
+Author: UX Themes
+Template: flatsome
+Version: 3.0
+*/
+
+/*************** ADD CUSTOM CSS HERE.   ***************/
+
+:root {
+    --color-primary: #f8eddd;
+    --color-secondary: #231f20;
+    --color-third: #3ea5ab;
+}
+
+.section-footer span.ux-menu-link__text:hover,
+.ux-menu-link--active .ux-menu-link__link,
+.ux-menu-link:hover .ux-menu-link__link {
+    color: var(--color-third);
+}
+
+.absolute-footer.dark {
+    display: none;
+}
+
+ul.nav.header-nav.header-bottom-nav.nav-left {
+    display: flex;
+    gap: 52px;
+}
+
+ul.nav.header-nav.header-bottom-nav.nav-left a.nav-top-link:hover {
+    color: var(--color-secondary);
+}
+
+
+ul.header-nav.header-nav-main.nav.nav-right {
+    display: flex;
+    gap: 27px;
+}
+
+
+.header-nav a.nav-top-link {
+    font-weight: 400;
+    color: #000;
+    transition: all 0.3 ease;
+}
+
+
+.header-nav img.ux-menu-icon {
+    filter: brightness(0) saturate(100%) invert(65%) sepia(55%) saturate(315%) hue-rotate(144deg) brightness(95%) contrast(90%);
+}
+
+.box-image {
+    height: 420px !important;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+}
+
+.box-image img {
+    display: block;
+    width: 100%;
+    height: auto;
+    transition: transform 4s ease;
+    transform: translateY(0);
+    border-radius: 16px;
+}
+
+.product-small:hover .box-image img {
+    transform: translateY(calc(350px - 100%));
+}
+
+.product-small.box.prod-home {
+    border-radius: 16px;
+    box-shadow: 0 10px 40px rgba(0, 108, 66, .14);
+}
+
+.box-badge .box-text {
+    background-color: #3ea5ace6;
+    bottom: 0%;
+    padding: .8em 1em 1em;
+    position: absolute;
+    transition: background .3s;
+    z-index: 1;
+}
+
+.box-badge .box-text a,
+.box-badge .box-text span {
+    color: #fff;
+}
+
+p.name.product-title.woocommerce-loop-product__title {
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.nav-pagination>li>.current,
+.nav-pagination>li>a:hover,
+.nav-pagination>li>span:hover {
+    background-color: var(--color-third);
+    border-color: var(--color-third);
+    color: #fff;
+}
+
+
+.primary,
+input[type=submit],
+input[type=submit].button {
+    background-color: var(--fs-color-primary);
+    color: #9e9191;
+}
+
+
+.flickity-viewport {
+    max-height: 900px;
+    overflow-y: auto;
+    touch-action: pan-y;
+    position: relative;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.flickity-viewport::-webkit-scrollbar {
+    display: none;
+}
+
+.flickity-slider {
+    position: relative;
+    width: 100%;
+}
+
+.woocommerce-product-gallery__image {
+    position: relative !important;
+    left: auto !important;
+    transform: none !important;
+    width: 100%;
+}
+
+.woocommerce-product-gallery__image img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.woocommerce-product-gallery .woocommerce-product-gallery__wrapper:before {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 57px;
+    background-image: url(https://themes.erasvietnam.vn/wp-content/uploads/2025/06/unsplash_cqbLg3lZEpk-e1749709788690.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: top center;
+    position: relative;
+}
+
+.product-container {
+    background-image: url('http://localhost/portfolio/wp-content/themes/flatsome-child/assets/img/Untitled design (6).png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.phone_frame {
+    position: absolute;
+    top: 105px;
+    left: 0;
+    width: 100%;
+    height: auto;
+    z-index: 1;
+}
+
+.image_theme {
+    position: relative;
+    z-index: 2;
+    width: 90%;
+    margin: 0px auto 0px;
+    max-height: 715px;
+    overflow-y: auto;
+    touch-action: pan-y;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.image_theme img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+
+hr {
+    border-width: 0;
+    border-top: 1px solid;
+    margin: 15px 0 60px;
+    opacity: .1;
+}
+
+@media only screen and (max-width: 48em) {
+    /*************** ADD MOBILE ONLY CSS HERE  ***************/
+
+
+}
