@@ -1,67 +1,66 @@
 services:
-    nginx:
-        image: nginx:alpine
-        container_name: portfolio_nginx
-        restart: unless-stopped
-        ports:
-            - "8081:80"
-        depends_on:
-            php:
-                condition: service_started
-        volumes:
-            - ./portfolio:/var/www/html
-            - ./nginx/conf.d:/etc/nginx/conf.d:ro
+  nginx:
+    image: nginx:alpine
+    container_name: portfolio_nginx
+    restart: unless-stopped
+    ports:
+      - "8081:80"
+    depends_on:
+      php:
+        condition: service_started
+    volumes:
+      - ./portfolio:/var/www/html
+      - ./nginx/conf.d:/etc/nginx/conf.d:ro
 
-    php:
-        image: wordpress:php8.2-fpm
-        container_name: portfolio_php
-        restart: unless-stopped
-        environment:
-            WORDPRESS_DB_HOST: db:3306
-            WORDPRESS_DB_USER: wpuser
-            WORDPRESS_DB_PASSWORD: "wppass"
-            WORDPRESS_DB_NAME: portfolio
-        depends_on:
-            db:
-                condition: service_healthy
-        volumes:
-            - ./portfolio:/var/www/html
-            - ./php.ini:/usr/local/etc/php/conf.d/zz-custom.ini:ro
+  php:
+    image: wordpress:php8.2-fpm
+    container_name: portfolio_php
+    restart: unless-stopped
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_USER: wpuser
+      WORDPRESS_DB_PASSWORD: "wppass"
+      WORDPRESS_DB_NAME: portfolio
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ./portfolio:/var/www/html
+      - ./php/php.ini:/usr/local/etc/php/conf.d/zz-custom.ini:ro
 
-    db:
-        image: mysql:8.0
-        container_name: portfolio_db
-        restart: unless-stopped
-        command: --default-authentication-plugin=mysql_native_password
-        environment:
-            MYSQL_DATABASE: portfolio
-            MYSQL_USER: wpuser
-            MYSQL_PASSWORD: "wppass"
-            MYSQL_ROOT_PASSWORD: "Duc091203@"
-        volumes:
-            - db_data:/var/lib/mysql
-            - ./portfolio.sql:/docker-entrypoint-initdb.d/portfolio.sql:ro
-        ports:
-            - "3307:3306"
-        healthcheck:
-            test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -u root -p$${MYSQL_ROOT_PASSWORD} || exit 1"]
-            interval: 10s
-            timeout: 5s
-            retries: 10
+  db:
+    image: mysql:8.0
+    container_name: portfolio_db
+    restart: unless-stopped
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_DATABASE: portfolio
+      MYSQL_USER: wpuser
+      MYSQL_PASSWORD: "wppass"
+      MYSQL_ROOT_PASSWORD: "Duc091203@"
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./portfolio.sql:/docker-entrypoint-initdb.d/portfolio.sql:ro
+    # ❌ Không expose MySQL ra ngoài host
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -u root -p$${MYSQL_ROOT_PASSWORD} || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
 
-    phpmyadmin:
-        image: phpmyadmin:5
-        container_name: portfolio_pma
-        restart: unless-stopped
-        depends_on:
-            db:
-                condition: service_healthy
-        environment:
-            PMA_HOST: db
-            PMA_USER: root
-            PMA_PASSWORD: "Duc091203@"
-        ports:
-            - "8082:80"   # mở phpMyAdmin tại http://localhost:8082
+  phpmyadmin:
+    image: phpmyadmin:5
+    container_name: portfolio_pma
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      PMA_HOST: db
+      PMA_USER: root
+      PMA_PASSWORD: "Duc091203@"
+    ports:
+      - "8082:80"   # mở phpMyAdmin tại http://localhost:8082
 
 volumes:
-    db_data:
+  db_data:
