@@ -25,7 +25,6 @@ define('DB_USER', 'wpuser');
 define('DB_PASSWORD', 'wppass');
 define('DB_HOST', 'db:3306');       // db là tên service MySQL trong docker-compose
 
-
 $proto = (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO']==='https') ? 'https' : 'http';
 define('WP_HOME',    $proto.'://'.$_SERVER['HTTP_HOST']);
 define('WP_SITEURL', $proto.'://'.$_SERVER['HTTP_HOST']);
