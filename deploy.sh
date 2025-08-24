@@ -26,19 +26,21 @@ mkdir -p ssl
 # Kiểm tra SSL certificates
 if [ ! -f "ssl/portfolio.ducdatphat.id.vn.crt" ] || [ ! -f "ssl/portfolio.ducdatphat.id.vn.key" ]; then
     echo "⚠️  SSL certificates not found!"
-    echo "Please add your SSL certificates:"
-    echo "  - ssl/portfolio.ducdatphat.id.vn.crt"
-    echo "  - ssl/portfolio.ducdatphat.id.vn.key"
-    echo ""
-    echo "You can get free SSL from Let's Encrypt or your domain provider."
-    echo "For now, deploying without SSL (HTTP only)..."
+    echo "Deploying without SSL (HTTP only)..."
     
-    # Sử dụng cấu hình HTTP only
-    cp nginx/conf.d/default.conf nginx/conf.d/active.conf
+    # Đảm bảo sử dụng cấu hình default (HTTP only)
+    echo "✅ Using HTTP configuration"
 else
     echo "✅ SSL certificates found"
-    # Sử dụng cấu hình HTTPS
-    cp nginx/conf.d/production.conf nginx/conf.d/active.conf
+    echo "✅ Using HTTPS configuration"
+    
+    # Backup original default.conf
+    if [ ! -f "nginx/conf.d/default.conf.backup" ]; then
+        cp nginx/conf.d/default.conf nginx/conf.d/default.conf.backup
+    fi
+    
+    # Copy production config to default.conf
+    cp nginx/conf.d/production.conf nginx/conf.d/default.conf
 fi
 
 # Backup database nếu có
