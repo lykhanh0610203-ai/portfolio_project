@@ -41,7 +41,6 @@ services:
     volumes:
       - db_data:/var/lib/mysql
       - ./portfolio.sql:/docker-entrypoint-initdb.d/portfolio.sql:ro
-    # ❌ Không expose MySQL ra ngoài host
     healthcheck:
       test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -u root -p$${MYSQL_ROOT_PASSWORD} || exit 1"]
       interval: 10s
@@ -60,7 +59,24 @@ services:
       PMA_USER: root
       PMA_PASSWORD: "Duc091203@"
     ports:
-      - "8082:80"   # mở phpMyAdmin tại http://localhost:8082
+      - "8082:80"
+
+  wpcli:
+    image: wordpress:cli
+    container_name: portfolio_wpcli
+    depends_on:
+      - db
+      - php
+    volumes:
+      - ./portfolio:/var/www/html
+    working_dir: /var/www/html
+    entrypoint: wp
+    command: --info
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_USER: wpuser
+      WORDPRESS_DB_PASSWORD: "wppass"
+      WORDPRESS_DB_NAME: portfolio
 
 volumes:
   db_data:
