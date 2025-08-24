@@ -4,13 +4,13 @@ services:
     container_name: portfolio_nginx
     restart: unless-stopped
     ports:
-      - "8081:80"
+      - "8081:80"                               # web app xuất hiện ở http://localhost:8081
     depends_on:
       php:
         condition: service_started
     volumes:
-      - ./portfolio:/var/www/html
-      - ./nginx/conf.d:/etc/nginx/conf.d:ro
+      - ./portfolio:/var/www/html               # mã WP
+      - ./nginx/conf.d:/etc/nginx/conf.d:ro     # mount các virtual host .conf
 
   php:
     image: wordpress:php8.2-fpm
@@ -40,7 +40,7 @@ services:
       MYSQL_ROOT_PASSWORD: "Duc091203@"
     volumes:
       - db_data:/var/lib/mysql
-      - ./portfolio.sql:/docker-entrypoint-initdb.d/portfolio.sql:ro
+      - ./db/portfolio.sql:/docker-entrypoint-initdb.d/portfolio.sql:ro
     healthcheck:
       test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -u root -p$${MYSQL_ROOT_PASSWORD} || exit 1"]
       interval: 10s
@@ -59,7 +59,7 @@ services:
       PMA_USER: root
       PMA_PASSWORD: "Duc091203@"
     ports:
-      - "8082:80"
+      - "8082:80"                               # http://localhost:8082
 
   wpcli:
     image: wordpress:cli
@@ -67,9 +67,6 @@ services:
     depends_on:
       - db
       - php
-    volumes:
-      - ./portfolio:/var/www/html
-      - ./wp-cli.sh:/usr/local/bin/wp-cli.sh:ro   # nếu bạn để ở ./scripts/wp-cli.sh thì đổi đường dẫn này
     working_dir: /var/www/html
     entrypoint: wp
     command: --info
@@ -78,6 +75,9 @@ services:
       WORDPRESS_DB_USER: wpuser
       WORDPRESS_DB_PASSWORD: "wppass"
       WORDPRESS_DB_NAME: portfolio
+    volumes:
+      - ./portfolio:/var/www/html
+      - ./scripts/wp-cli.sh:/usr/local/bin/wp-cli.sh:ro   # tùy chọn: mount script vào container
 
 volumes:
   db_data:
