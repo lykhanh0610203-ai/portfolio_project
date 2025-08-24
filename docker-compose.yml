@@ -4,7 +4,7 @@ services:
     container_name: portfolio_nginx
     restart: unless-stopped
     ports:
-      - "8081:80"                               # web app ở port 8080 thay vì 80
+      - "127.0.0.1:8081:80"                     # chỉ bind localhost, không expose ra ngoài
     depends_on:
       php:
         condition: service_started
