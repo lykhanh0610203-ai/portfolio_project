@@ -68,7 +68,7 @@ services:
       - php
     volumes:
       - ./portfolio:/var/www/html
-    user: xfs
+    user: "33:33"
     command: tail -f /dev/null
 
 volumes:
